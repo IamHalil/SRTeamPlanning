@@ -2,10 +2,8 @@ import com.rabbitmq.client.*;
 
 public class Sender {
 
-    private final static String QUEUE_NAME = "UUID";
+    //private final static String QUEUE_NAME = "UUID";
     private final static String EXCHANGE_NAME = "rabbitexchange";
-
-
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -13,15 +11,15 @@ public class Sender {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        //channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         channel.exchangeDeclare(EXCHANGE_NAME,"fanout"); // other options: direct, topic, headers and fanout
 
-        //String queueName =
-        //channel.queueBind(,"","");
+        //channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        //channel.queueBind(TASK_QUEUE_NAME, EXCHANGE_NAME, "");
 
         String message = getMessage(argv);
-        channel.basicPublish("rabbitexchange", "", null, message.getBytes());
-        System.out.println(" [x] Sending to exchange:  '" + message +"' message: '"  + message + "'");
+        channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes());
+        //channel.basicPublish("", "UUID", null, message.getBytes());
+        System.out.println(" [x] Sending to exchange:   '" + EXCHANGE_NAME +"' message: '"  + message + "'");
 
         channel.close();
         connection.close();

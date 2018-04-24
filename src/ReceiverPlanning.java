@@ -1,14 +1,11 @@
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
-
-public class Receiver {
-
-
-//    private final static String TASK1UUID_QUEUE_NAME = "UUID";
+public class ReceiverPlanning {
+    //    private final static String TASK1UUID_QUEUE_NAME = "UUID";
 
 
-    private final static String TASK_QUEUE_NAME = "UUID";
+    private final static String TASK_QUEUE_NAME = "Planning";
     private final static String EXCHANGE_NAME = "rabbitexchange";
 
     public static void main(String[] argv) throws Exception {
@@ -19,9 +16,9 @@ public class Receiver {
 
         channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
 
+        channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
         channel.queueBind(TASK_QUEUE_NAME, EXCHANGE_NAME, "");
 
-        //channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
         System.out.println(" [*] Waiting with exchange for messages. To exit press CTRL+C");
 
         final Consumer consumer = new DefaultConsumer(channel) {
@@ -62,4 +59,5 @@ public class Receiver {
         Thread.sleep(5000);
         System.out.println("END\r\n");
     }
+
 }
