@@ -3,6 +3,8 @@ import com.rabbitmq.client.*;
 public class Sender {
 
     private final static String QUEUE_NAME = "UUID";
+    private final static String EXCHANGE_NAME = "rabbitexchange";
+
 
 
     public static void main(String[] argv) throws Exception {
@@ -11,10 +13,15 @@ public class Sender {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        //channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.exchangeDeclare(EXCHANGE_NAME,"fanout"); // other options: direct, topic, headers and fanout
+
+        //String queueName =
+        //channel.queueBind(,"","");
+
         String message = getMessage(argv);
         channel.basicPublish("rabbitexchange", "", null, message.getBytes());
-        System.out.println(" [x] Sent '" + message + "'");
+        System.out.println(" [x] Sending to exchange:  '" + message +"' message: '"  + message + "'");
 
         channel.close();
         connection.close();
@@ -24,7 +31,7 @@ public class Sender {
         //message is set up here
 
         if (strings.length < 1)
-            return "...Awesome Integration event string...";
+            return "... Awesome Integration event string...";
         return joinStrings(strings, " ");
     }
 

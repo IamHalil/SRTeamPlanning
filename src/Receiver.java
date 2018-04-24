@@ -16,8 +16,10 @@ public class Receiver {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
+        channel.exchangeDeclare("rabbitexchange","fanout");
+
         channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        System.out.println(" [*] Waiting with exchange for messages. To exit press CTRL+C");
 
         final Consumer consumer = new DefaultConsumer(channel) {
             @Override
