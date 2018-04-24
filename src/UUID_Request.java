@@ -7,9 +7,9 @@ public class UUID_Request {
     private EntityType Entity_type;
     private MessageSource Source;
 
-    public UUID_Request(int source_id, EntityType thisEntityType, MessageSource thisMessageSource) {
+    public UUID_Request(int source_id, EntityType Entity_type, MessageSource thisMessageSource) {
         this.Source_id = source_id;
-        this.Entity_type = thisEntityType;
+        this.Entity_type = Entity_type;
         this.Source = thisMessageSource;
     }
 

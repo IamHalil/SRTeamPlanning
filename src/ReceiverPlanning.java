@@ -41,22 +41,38 @@ public class ReceiverPlanning {
 //        channel.basicConsume(TASK1UUID_QUEUE_NAME, autoAck, consumer);
     }
     private static void doWork(String task) throws InterruptedException {
-        //
+        //Do work to do here
 
-        String UUID = "123!@#SuperSecret#@!321";
-/*
-        String test="";
+        System.out.println("<RECEIVER:>STARTING WORK\r\n");
+        //What task?
 
-        for (char ch: task.toCharArray()) {
 
-            test+=ch;
+        if(task.toLowerCase().contains("create event"))
+        {
+            System.out.println("<RECEIVER:>CREATE EVENT: fullmessage: "+task);
+            System.out.println("WORKING HARD... For 5 seconds...\r\n");
+            Thread.sleep(5000);
+        }else if(task.toLowerCase().contains("update event")) {
 
-            //if (ch == '.') Thread.sleep(1000);
-        }*/
-        System.out.println("START\r\n");
-        System.out.println("UUID: "+UUID+" task: "+task);
-        System.out.println("WORKING HARD...\r\n");
-        Thread.sleep(5000);
+            System.out.println("<RECEIVER:>UPDATE EVENT: fullmessage: " + task);
+            System.out.println("WORKING HARD... For 5 seconds...\r\n");
+            Thread.sleep(5000);
+        }else if(task.toLowerCase().contains("dummy response")) {
+            System.out.println("<RECEIVER:> This is a dummy message well received!... Chilling for 4.2 seconds...\r\n");
+            Thread.sleep(4200);
+
+        }else{
+
+            System.out.println("<RECEIVER:> Nothing to do... Chilling for 10 seconds...\r\n");
+            Thread.sleep(10000);
+        }
+
+        //Switch task
+
+        //Create new event
+
+        //End task
+
         System.out.println("END\r\n");
     }
 
