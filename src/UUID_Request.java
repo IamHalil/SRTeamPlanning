@@ -1,16 +1,14 @@
+//class for instantiating the request for the UUID
+
 public class UUID_Request {
     private int Source_id;
+    private Sender.EntityType Entity_type;
+    private Sender.SourceType Source;
 
-    public enum EntityType {visitor, admin, responsible};
-    public enum MessageSource {Front_End, Planning, Monitoring, Kassa, CRM, Facturatie};
-
-    private EntityType Entity_type;
-    private MessageSource Source;
-
-    public UUID_Request(int source_id, EntityType Entity_type, MessageSource thisMessageSource) {
+    public UUID_Request(int source_id, Sender.EntityType Entity_type, Sender.SourceType thisSource) {
         this.Source_id = source_id;
         this.Entity_type = Entity_type;
-        this.Source = thisMessageSource;
+        this.Source = thisSource;
     }
 
     //    GETTERS & SETTERS
@@ -21,17 +19,17 @@ public class UUID_Request {
         Source_id = source_id;
     }
 
-    public EntityType getEntity_type() {
+    public Sender.EntityType getEntity_type() {
         return Entity_type;
     }
-    public void setEntity_type(EntityType entity_type) {
+    public void setEntity_type(Sender.EntityType entity_type) {
         Entity_type = entity_type;
     }
 
-    public MessageSource getSource() {
+    public Sender.SourceType getSource() {
         return Source;
     }
-    public void setSource(MessageSource source) {
+    public void setSource(Sender.SourceType source) {
         Source = source;
     }
 

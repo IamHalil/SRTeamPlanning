@@ -1,18 +1,34 @@
+//class for instantiating the response for the UUID request
+
+//https://stackoverflow.com/a/8345074
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UUID_Response {
     private int Source_id;
     private String UUID;
     private int Entity_version;
 
-    public enum EntityType {visitor, admin, responsible};
-    public enum MessageSource {Front_End, Planning, Monitoring, Kassa, CRM, Facturatie};
+    private Sender.EntityType Entity_type;
+    private Sender.SourceType Source;
 
-    private EntityType Entity_type;
-    private MessageSource Source;
+    public UUID_Response(UUID_Request thisUUID_Request)
+    {
+        this.Source_id = thisUUID_Request.getSource_id();
+        this.Entity_type = thisUUID_Request.getEntity_type();
+        this.Source = thisUUID_Request.getSource();
+        this.Entity_version=1;
 
-    public UUID_Response(int source_id, EntityType Entity_type, MessageSource thisMessageSource) {
+        //dummy value
+        this.UUID=getNewUUID("");
+    }
+    public UUID_Response(int source_id, Sender.EntityType Entity_type, Sender.SourceType thisSourceType) {
         this.Source_id = source_id;
         this.Entity_type = Entity_type;
-        this.Source = thisMessageSource;
+        this.Source = thisSourceType;
+        this.Entity_version=1;
+        //dummy value
+        this.UUID=getNewUUID("");
     }
 
     //    GETTERS & SETTERS
@@ -37,20 +53,46 @@ public class UUID_Response {
         Entity_version = entity_version;
     }
 
-    public EntityType getEntity_type() {
+    public Sender.EntityType getEntity_type() {
         return Entity_type;
     }
-    public void setEntity_type(EntityType entity_type) {
+    public void setEntity_type(Sender.EntityType entity_type) {
         Entity_type = entity_type;
     }
 
-    public MessageSource getSource() {
+    public Sender.SourceType getSource() {
         return Source;
     }
-    public void setSource(MessageSource source) {
+    public void setSource(Sender.SourceType source) {
         Source = source;
     }
 
 //    NEXT?
+
+    public String getNewUUID(String test) {
+        //dummy message
+        return "<123UUID321>";
+
+    }
+
+    //https://stackoverflow.com/a/8345074
+    public static String getCurrentDateTimeStamp()
+    {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return sdf.format(date);
+    }
+
+    @Override
+    public String toString() {
+        String s = "\n\n[UUID_RESPONSE tostring()]: \n";
+        s+= "{\n 'Source_id' : '"+this.getSource_id()+ "' ,\n ";
+        s+= " 'UUID' : '"+this.getUUID()+ " ,\n ";
+        s+= " 'Entity_version' : '"+this.getEntity_version()+ " ,\n ";
+        s+= " 'Entity_type' : '"+this.getEntity_type()+ " , \n ";
+        s+= " 'Source' : '"+this.getSource()+ " \n } \n DaTiSt: " + getCurrentDateTimeStamp();
+
+        return s;
+    }
 
 }
